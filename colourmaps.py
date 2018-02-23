@@ -1,6 +1,7 @@
 from matplotlib.cm import Purples, Blues, Greens, Oranges, Reds
 from matplotlib.colors import LinearSegmentedColormap
-import numpy as np 
+import numpy as np
+from math import floor, ceil, modf
 
 SIZE = 10
 
@@ -64,21 +65,26 @@ darkblue_map = {'red': ((0, 0.04, 0.04),
                 'alpha': ((0, 0, 0),
                           (1, 1, 1))}
 
-colourmaps = [Purples(np.linspace(0., 1, 256)),
-              Blues(np.linspace(0., 1, 256)),
-              Greens(np.linspace(0., 1, 256)),
-              Oranges(np.linspace(0., 1, 256)),
-              Reds(np.linspace(0., 1, 256)),
-              LinearSegmentedColormap('darkblue', darkblue_map)(np.linspace(0., 1, 256)),
-              LinearSegmentedColormap('pinks', pinks_map)(np.linspace(0., 1, 256)),
-              LinearSegmentedColormap('yellows', yellows_map)(np.linspace(0., 1, 256)),
-              LinearSegmentedColormap('lightblue', lightblue_map)(np.linspace(0., 1, 256)),
-              LinearSegmentedColormap('darkpink', darkpink_map)(np.linspace(0., 1, 256))]
+colourmaps = [Purples,
+              Blues,
+              Greens,
+              Oranges,
+              Reds,
+              LinearSegmentedColormap('darkblue', darkblue_map),
+              LinearSegmentedColormap('pinks', pinks_map),
+              LinearSegmentedColormap('yellows', yellows_map),
+              LinearSegmentedColormap('lightblue', lightblue_map),
+              LinearSegmentedColormap('darkpink', darkpink_map)]
 
-def get_colourmap(number: int):
+def get_colourmap(number: float):
     """Returns a vertically stacked array containing
     the amount of colourmaps specified by number
     """
-    if number > len(colourmaps):
-        number = len(colourmaps)
-    return np.vstack(colourmaps[:number])
+    assert number <= SIZE
+    result = [colourmaps[i](np.linspace(0., 1, 1000))
+              for i in range(floor(number))]
+
+    result.append(colourmaps[ceil(number) - 1](np.linspace(0., modf(number)[0], 
+                                           floor(modf(number)[0] * 1000))))
+
+    return np.vstack(result)

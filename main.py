@@ -63,6 +63,9 @@ class Heatmap:
 
         # assigning a number to each unique value provided, and map it to the points
         count = Counter(self._values)
+        # value[0] because value from a enumerate(Counter) gives a 
+        # tuple of the name of the item and how many of that item 
+        # are contained within the count.
         self._legend = {value[0]: i + 1 if i + 1 <= SIZE else SIZE
                         for i, value in enumerate(count.most_common())}
         self._verboseprint(self._legend)
@@ -85,8 +88,10 @@ class Heatmap:
                             "Lon Min:         {}\n"
                             "Lon Max:         {}\n"
                             "Lon Grid Width:  {}\n"
-                            "Grid Dimensions: ({}, {})\n"
-                            "Threshold:       {}\n"))
+                            "Grid Dimensions: ({}, {})\n").format(
+                            self._lat_min, self._lat_max, grid_height,
+                            self._lon_min, self._lon_max, grid_width,
+                            grid_width, grid_height))
 
         grid = np.full((grid_height, grid_width), 0.0)
 
@@ -103,7 +108,9 @@ class Heatmap:
             # y comes first in the way the grid displays the map
             # which is why it is reversed in this fashion.
             # debugging is shown in x y to keep in line with
-            # conventional thinking.
+            # conventional thinking, since if you think of them
+            # in the x y convention then it still makes sense 
+            # on the actual map.
             grid[grid_y][grid_x] = self._legend[value]
             self._verboseprint(("{} -> Map Coords: ({}, {}) || "
                                 "Grid Coords: ({}, {}) || "
@@ -113,17 +120,35 @@ class Heatmap:
 
         self._verboseprint("Filling in the grid...")
         try:
-            import progressbar
+            import progressbar # displays progress nicely if installed
             prog_bar = progressbar.ProgressBar()
         except ImportError:
             prog_bar = lambda l: l
         for i in prog_bar(range(grid_height)):
             for j in range(grid_width):
-                vicinity = []
                 radius = 0
+                vicinity = []
+                # gradually increases the radius check until 
+                # points are found within the radius
                 while not vicinity:
-                    radius += 0.05 / scale
-                    vicinity = []
+                    radius += 0.01 / scale
+                    vicinity = [point_i for point_i in range(item_count)
+                                if sqrt((x_coords[point_i] - j) ** 2 +\
+                                    (y_coords[point_i] - i) ** 2)
+                                    <= radius]
+                values = Counter([self._values[i] for i in vicinity])
+                dominant = values.most_common(1)[0] # (value, count)
+                d_value = dominant[0]
+                d_count = dominant[1]
+                # sum of the rest of the counts
+                rest = sum([count for value, count in values.most_common()[1:]])
+                if d_count <= rest:
+                    # self._verboseprint("{} <= {} at {}, {}. Radius: {}".format(d_count, rest, i, j, radius))
+                    continue
+                else:
+                    grid[i][j] = self._legend[d_value] - (rest / d_count)
+        
+        return grid
     
     def display_map(self) -> None:
         """
@@ -138,12 +163,12 @@ class Heatmap:
         m.drawcountries()
         m.fillcontinents(color="white", lake_color="#ic9ef7", alpha=.1)
         m.drawcoastlines()
-        m.drawrivers(color="#1c9ef7", alpha=.1)
+        m.drawrivers(color="#1c9ef7")
 
         overlay_cmap = LinearSegmentedColormap.from_list('heatmap_colourmap',
         get_colourmap(len(self._legend)))
 
-        m.imshow(self._grid, cmap=overlay_cmap, alpha=1, 
+        m.imshow(self.grid, cmap=overlay_cmap, alpha=1, 
                  vmin=0, interpolation="bicubic")
         
         plt.show()
@@ -179,3 +204,4 @@ if __name__ == "__main__":
             scale = None
 
     heatmap = Heatmap(dataset, scale, args.verbose)
+    heatmap.display_map()
