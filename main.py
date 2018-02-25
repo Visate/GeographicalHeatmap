@@ -7,9 +7,6 @@ from typing import List, Dict, Any, Callable, Union
 from collections import Counter
 from math import sqrt, ceil
 import numpy as np
-from mpl_toolkits import basemap
-import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
 from colourmaps import get_colourmap, SIZE
 from utilities import load_from_csv
 
@@ -153,10 +150,15 @@ class Heatmap:
     def display_map(self) -> None:
         """
         Uses matplotlib to display the map
+        Requires matplotlib and basemap to be installed basemap.in order to function
         """
+        from mpl_toolkits.basemap import Basemap
+        import matplotlib.pyplot as plt
+        from matplotlib.colors import LinearSegmentedColormap
+
         plt.figure(figsize=FIGSIZE)
 
-        m = basemap.Basemap(projection="merc", resolution="i",
+        m = Basemap(projection="merc", resolution="i",
                             llcrnrlat=self._lat_min, llcrnrlon=self._lon_min,
                             urcrnrlat=self._lat_max, urcrnrlon=self._lon_max)
         
