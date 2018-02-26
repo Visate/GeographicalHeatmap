@@ -59,3 +59,7 @@ a) Circular "power" influence
 b) original but...
     - incorporate the "power weighting" system to the current map
     - goal is to make it look similar to other relevant heatmaps and I think this is the way to do it
+
+## NOTES FEB 25
+You are getting negative numbers in your map
+Rethink the adjustment on the distance because that only works for singular points and does not extend to multiple weights.
