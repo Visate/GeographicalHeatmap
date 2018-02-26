@@ -11,6 +11,8 @@ from colourmaps import get_unified_colourmap, SIZE
 from utilities import Counter, load_from_csv
 
 BORDER_WIDTH = 0.1 # how much space around the smallest & biggest points (deg)
+SCALE_DEFAULT = 0.007
+RADIUS_DEFAULT = 0.2
 FIGSIZE = (16, 10)
 
 class Heatmap:
@@ -43,12 +45,12 @@ class Heatmap:
     _lon_min: float
     _lon_max: float
 
-    def __init__(self, filepath: str, scale: float = 0.007, 
-                 verbose: bool = False, threshold: float = 0) -> None:
+    def __init__(self, filepath: str, scale: float = SCALE_DEFAULT, 
+                 radius: float = RADIUS_DEFAULT, verbose: bool = False) -> None:
         """
         Initializes a new heatmap
         """
-        self._scale, self._threshold = scale, threshold
+        self._scale, self._radius = scale, radius
         self._verboseprint = print if verbose else lambda *a, **k: None
 
         self._lats, self._lons, self._values, self._names = load_from_csv(filepath)
@@ -123,19 +125,12 @@ class Heatmap:
             prog_bar = lambda l: l
         for i in prog_bar(range(grid_height)):
             for j in range(grid_width):
-                radius = 0.3 / scale
+                radius = self._radius / scale
                 vicinity = [[point_i, 
                             sqrt((x_coords[point_i] - j) ** 2 +
                             (y_coords[point_i] - i) ** 2)] 
                             for point_i in range(item_count)]
-                if not [item for item in vicinity if item[1] <= radius]:
-                    pass
-                    # vicinity.sort(key=lambda point: point[1])
-                    # influence = vicinity[0]
-                    # i_value = self._values[influence[0]]
-                    # i_dist = influence[1]
-                    # grid[i][j] = self._legend[i_value] - (i_dist / 1)
-                else: 
+                if [item for item in vicinity if item[1] <= radius]:
                     vicinity = [[point_i, 0.99 - point_dist / radius]
                                 for point_i, point_dist in vicinity
                                 if point_dist <= radius]
@@ -149,10 +144,7 @@ class Heatmap:
                     d_weight = dominant[1]
                     # sum of the other weights
                     rest = sum([weight for value, weight in weights[1:]])
-                    if d_weight < rest:
-                        continue
-                        # self._verboseprint(weights)
-                    else:
+                    if not d_weight < rest:
                         total_weight = d_weight - rest
                         grid[i][j] = (self._legend[d_value]
                                       if total_weight >= 0.99
@@ -192,9 +184,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=("Generates a heatmap from "
                                                   "data and displays it"))
     parser.add_argument("-v", "--verbose", action="store_true")
-    parser.add_argument("-d", "--dataset", action="store")
-    parser.add_argument("-s", "--scale", action="store")
+    parser.add_argument("-d", "--dataset")
+    parser.add_argument("-s", "--scale")
+    parser.add_argument("-r", "--radius")
     args = parser.parse_args()
+
     dataset = args.dataset
     while not dataset:
         try:
@@ -207,6 +201,7 @@ if __name__ == "__main__":
             dataset = None
         except Exception as err:
             print("Error: {}. Please provide a valid dataset.".format(err))
+
     scale = float(args.scale) if args.scale else None
     while not scale:
         try:
@@ -214,10 +209,23 @@ if __name__ == "__main__":
             "Leave blank for the default value of 0.007 "
             "(smaller = more fidelity but slower, "
             "larger = less accurate but faster): "))
-            scale = 0.007 if not scale else float(scale)
+            scale = SCALE_DEFAULT if not scale else float(scale)
         except Exception:
             print("Please input a valid number.")
             scale = None
+    
+    radius = float(args.radius) if args.radius else None
+    while not radius:
+        try:
+            radius = input(("What is the checking radius for the data? "
+            "Leave blank for the default of 0.3 "
+            "(This is based on latitude/longitude degrees "
+            "and determines how far the program will look "
+            "for another point in the area): "))
+            radius = RADIUS_DEFAULT if not radius else float(radius)
+        except Exception:
+            print("Please input a valid number.")
+            radius = None
 
-    heatmap = Heatmap(dataset, scale, args.verbose)
+    heatmap = Heatmap(dataset, scale, radius, args.verbose)
     heatmap.display_map()
