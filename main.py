@@ -4,11 +4,11 @@ Geographical heatmap module
 written by Richard Gan
 """
 from typing import List, Dict, Any, Callable, Union
-from collections import Counter
+from collections import Counter as IterCounter
 from math import sqrt, ceil
 import numpy as np
-from colourmaps import get_colourmap, SIZE
-from utilities import load_from_csv
+from colourmaps import get_unified_colourmap, SIZE
+from utilities import Counter, load_from_csv
 
 BORDER_WIDTH = 0.1 # how much space around the smallest & biggest points (deg)
 FIGSIZE = (16, 10)
@@ -59,8 +59,8 @@ class Heatmap:
         self._lon_max = max(self._lons) + BORDER_WIDTH
 
         # assigning a number to each unique value provided, and map it to the points
-        count = Counter(self._values)
-        # value[0] because value from a enumerate(Counter) gives a 
+        count = IterCounter(self._values)
+        # value[0] because value from a enumerate(IterCounter) gives a 
         # tuple of the name of the item and how many of that item 
         # are contained within the count.
         self._legend = {value[0]: i + 1 if i + 1 <= SIZE else SIZE
@@ -123,27 +123,40 @@ class Heatmap:
             prog_bar = lambda l: l
         for i in prog_bar(range(grid_height)):
             for j in range(grid_width):
-                radius = 0
-                vicinity = []
-                # gradually increases the radius check until 
-                # points are found within the radius
-                while not vicinity:
-                    radius += 0.01 / scale
-                    vicinity = [point_i for point_i in range(item_count)
-                                if sqrt((x_coords[point_i] - j) ** 2 +\
-                                    (y_coords[point_i] - i) ** 2)
-                                    <= radius]
-                values = Counter([self._values[i] for i in vicinity])
-                dominant = values.most_common(1)[0] # (value, count)
-                d_value = dominant[0]
-                d_count = dominant[1]
-                # sum of the rest of the counts
-                rest = sum([count for value, count in values.most_common()[1:]])
-                if d_count <= rest:
-                    # self._verboseprint("{} <= {} at {}, {}. Radius: {}".format(d_count, rest, i, j, radius))
-                    continue
-                else:
-                    grid[i][j] = self._legend[d_value] - (rest / d_count)
+                radius = 0.3 / scale
+                vicinity = [[point_i, 
+                            sqrt((x_coords[point_i] - j) ** 2 +
+                            (y_coords[point_i] - i) ** 2)] 
+                            for point_i in range(item_count)]
+                if not [item for item in vicinity if item[1] <= radius]:
+                    pass
+                    # vicinity.sort(key=lambda point: point[1])
+                    # influence = vicinity[0]
+                    # i_value = self._values[influence[0]]
+                    # i_dist = influence[1]
+                    # grid[i][j] = self._legend[i_value] - (i_dist / 1)
+                else: 
+                    vicinity = [[point_i, 0.99 - point_dist / radius]
+                                for point_i, point_dist in vicinity
+                                if point_dist <= radius]
+                    weights = Counter()
+                    for point_i, weighted_dist in vicinity:
+                        weights[self._values[point_i]] += weighted_dist
+                    weights = list(weights.items())
+                    weights.sort(key=lambda item: item[1], reverse=True)
+                    dominant = weights[0]
+                    d_value = dominant[0]
+                    d_weight = dominant[1]
+                    # sum of the other weights
+                    rest = sum([weight for value, weight in weights[1:]])
+                    if d_weight < rest:
+                        continue
+                        # self._verboseprint(weights)
+                    else:
+                        total_weight = d_weight - rest
+                        grid[i][j] = (self._legend[d_value]
+                                      if total_weight >= 0.99
+                                      else self._legend[d_value] - (0.99 - total_weight))
         
         return grid
     
@@ -154,7 +167,7 @@ class Heatmap:
         """
         from mpl_toolkits.basemap import Basemap
         import matplotlib.pyplot as plt
-        from matplotlib.colors import LinearSegmentedColormap
+        # from matplotlib.colors import LinearSegmentedColormap
 
         plt.figure(figsize=FIGSIZE)
 
@@ -167,11 +180,10 @@ class Heatmap:
         m.drawcoastlines()
         m.drawrivers(color="#1c9ef7")
 
-        overlay_cmap = LinearSegmentedColormap.from_list('heatmap_colourmap',
-        get_colourmap(len(self._legend)))
+        img = m.imshow(self.grid, alpha=1, vmin=0, vmax=10,
+                       cmap=get_unified_colourmap())
 
-        m.imshow(self.grid, cmap=overlay_cmap, alpha=1, 
-                 vmin=0, interpolation="bicubic")
+        m.colorbar(img)
         
         plt.show()
         
@@ -180,8 +192,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=("Generates a heatmap from "
                                                   "data and displays it"))
     parser.add_argument("-v", "--verbose", action="store_true")
+    parser.add_argument("-d", "--dataset", action="store")
+    parser.add_argument("-s", "--scale", action="store")
     args = parser.parse_args()
-    dataset = None
+    dataset = args.dataset
     while not dataset:
         try:
             dataset = input("Which dataset csv file to use? (enter filepath): ")
@@ -193,7 +207,7 @@ if __name__ == "__main__":
             dataset = None
         except Exception as err:
             print("Error: {}. Please provide a valid dataset.".format(err))
-    scale = None
+    scale = float(args.scale) if args.scale else None
     while not scale:
         try:
             scale = input(("What is the scale of the map? "

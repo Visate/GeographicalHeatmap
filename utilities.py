@@ -3,6 +3,13 @@ utilities module for map
 """
 import csv
 
+class Counter(dict):
+    """ Basically a dictionary with support for
+    adding values despite missing keys
+    """
+    def __missing__(self, key: object) -> int:
+        return 0
+
 def load_from_csv(filepath: str) -> tuple:
     """ Loads the csv file and processes the data
     """
