@@ -63,3 +63,8 @@ b) original but...
 ## NOTES FEB 25
 You are getting negative numbers in your map
 Rethink the adjustment on the distance because that only works for singular points and does not extend to multiple weights.
+
+## TODO
+Visible legend (play around with the colorbar axis)
+Better UI/UX
+Documentation
