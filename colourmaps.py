@@ -1,17 +1,23 @@
+"""
+colourmaps module for heatmap
+"""
 from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
 from math import floor, ceil, modf
 
-SIZE = 10
+# defines how many colours there are and which colours they are
+# must be updated every time a colour is added to _unified_map
+COLOURS = ["#5b2b8c", "#004f82", "#00632b", "#a53d00", "#870000",
+           "#0a2d66", "#ff00ff", "#ffff00", "#00ffff", "#b23872"]
 
 # the colourmap is as follows:
 # purples, blues, greens, oranges, reds, 
 # darkblues, pinks, yellows, lightblues, darkpinks
 # every two items represents one part of the map
-# has a maximum support for 10 unique points
+# has a maximum support for len(COLOURS) unique points
 # the mapping utility used must have vmin set to 0
-# and vmax set to 10 in order to preserve how the colors look
-unified_map = {'red': ((0., 0.36, 0.36),
+# and vmax set to len(COLOURS) in order to preserve how the colors look
+_unified_map = {'red': ((0., 0.36, 0.36),
                        (0.100, 0.36, 0.36),
                        (0.101, 0, 0),
                        (0.200, 0, 0),
@@ -99,5 +105,5 @@ def get_unified_colourmap() -> LinearSegmentedColormap:
     """Returns an adjusted version of the unified colourmap
     according to the number provided
     """
-    unified_cmap = LinearSegmentedColormap('unified_cmap', unified_map, N=5000)
+    unified_cmap = LinearSegmentedColormap('unified_cmap', _unified_map, N=5000)
     return unified_cmap

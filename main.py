@@ -7,7 +7,7 @@ from typing import List, Dict, Any, Callable, Union
 from collections import Counter as IterCounter
 from math import sqrt, ceil
 import numpy as np
-from colourmaps import get_unified_colourmap, SIZE
+from colourmaps import get_unified_colourmap, COLOURS
 from utilities import Counter, load_from_csv
 
 BORDER_WIDTH = 0.1 # how much space around the smallest & biggest points (deg)
@@ -21,7 +21,9 @@ class Heatmap:
 
     grid - grid of the heatmap
     _verboseprint - function for debugging purposes
+    _filepath - current source dataset
     _scale - scale of the map
+    _radius - search radius for grid generation (in degrees)
     _values - values of points being plotted
     _lats - latitudes of points being plotted
     _lons - longitudes of points being plotted
@@ -34,7 +36,9 @@ class Heatmap:
     """
     grid: np.ndarray
     _verboseprint: Callable[..., Union[str, None]]
+    _filepath: str
     _scale: float
+    _radius: float
     _values: List[str]
     _lats: List[float]
     _lons: List[float]
@@ -50,10 +54,50 @@ class Heatmap:
         """
         Initializes a new heatmap
         """
-        self._scale, self._radius = scale, radius
+        self._filepath, self._scale, self._radius = filepath, scale, radius
         self._verboseprint = print if verbose else lambda *a, **k: None
 
-        self._lats, self._lons, self._values, self._names = load_from_csv(filepath)
+        self._initialize_data()
+
+    @property
+    def filepath(self) -> str:
+        """
+        Get current source filepath
+        """
+        return self._filepath
+    
+    @filepath.setter
+    def filepath(self, value: str) -> None:
+        self._filepath = value
+        self._initialize_data()
+
+    @property
+    def scale(self) -> float:
+        """
+        Get scale of the Heatmap
+        """
+        return self._scale
+    
+    @scale.setter
+    def scale(self, value: float) -> None:
+        self._scale = value
+
+    @property
+    def radius(self) -> float:
+        """
+        Get search radius for the Heatmap
+        """
+        return self._radius
+    
+    @radius.setter
+    def radius(self, value: float) -> None:
+        self._radius = value
+    
+    def _initialize_data(self) -> None:
+        """
+        Loads the dataset and prepares for it to be generated
+        """
+        self._lats, self._lons, self._values, self._names = load_from_csv(self._filepath)
 
         self._lat_min = min(self._lats) - BORDER_WIDTH
         self._lat_max = max(self._lats) + BORDER_WIDTH
@@ -65,13 +109,12 @@ class Heatmap:
         # value[0] because value from a enumerate(IterCounter) gives a 
         # tuple of the name of the item and how many of that item 
         # are contained within the count.
-        self._legend = {value[0]: i + 1 if i + 1 <= SIZE else SIZE
+        self._legend = {value[0]: i + 1 if i + 1 <= len(COLOURS) else len(COLOURS)
                         for i, value in enumerate(count.most_common())}
-        self._verboseprint(self._legend)
 
-        self.grid = self._calculate_grid()
+        self._verboseprint(self._legend)
     
-    def _calculate_grid(self) -> np.ndarray:
+    def calculate_grid(self) -> None:
         """
         Calculates the values of the grid based on current information
         """
@@ -150,7 +193,7 @@ class Heatmap:
                                       if total_weight >= 0.99
                                       else self._legend[d_value] - (0.99 - total_weight))
         
-        return grid
+        self.grid = grid
     
     def display_map(self) -> None:
         """
@@ -158,8 +201,8 @@ class Heatmap:
         Requires matplotlib and basemap to be installed basemap.in order to function
         """
         from mpl_toolkits.basemap import Basemap
+        from matplotlib.patches import Patch
         import matplotlib.pyplot as plt
-        # from matplotlib.colors import LinearSegmentedColormap
 
         plt.figure(figsize=FIGSIZE)
 
@@ -172,11 +215,14 @@ class Heatmap:
         m.drawcoastlines()
         m.drawrivers(color="#1c9ef7")
 
-        img = m.imshow(self.grid, alpha=1, vmin=0, vmax=10,
+        m.imshow(self.grid, alpha=1, vmin=0, vmax=len(COLOURS),
                        cmap=get_unified_colourmap())
 
-        m.colorbar(img)
-        
+        legend_items = []
+        for i, name in enumerate(self._legend):
+            legend_items.append(Patch(color=COLOURS[i], label=name))
+        plt.legend(handles=legend_items)
+
         plt.show()
         
 if __name__ == "__main__":
@@ -228,4 +274,5 @@ if __name__ == "__main__":
             radius = None
 
     heatmap = Heatmap(dataset, scale, radius, args.verbose)
+    heatmap.calculate_grid()
     heatmap.display_map()
