@@ -4,7 +4,7 @@ utilities module for map
 import csv
 
 class Counter(dict):
-    """ Basically a dictionary with support for
+    """ A dictionary with support for
     adding values despite missing keys
     """
     def __missing__(self, key: object) -> int:
