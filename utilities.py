@@ -26,8 +26,8 @@ def load_from_csv(filepath: str) -> tuple:
                 continue
             lats.append(float(row[1]))
             lons.append(float(row[2]))
-            values.append(row[3])
-            names.append(row[0])
+            values.append(row[3].strip())
+            names.append(row[0].strip())
 
         assert all([len(x) == len(lats) for x in [lons, values, names]])
 
