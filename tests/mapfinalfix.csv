@@ -1,0 +1,418 @@
+Number,Place,N-S,E-W,Value
+1,Brdo pri Šmohorju – Egg bei Hermagor,46.613409,13.404958,oral
+2,Borlje – Förolach,46.631474,13.47626,oral
+3,Blače – Vorderberg,46.595215,13.524262,oral
+4,Bistrica na Zilji – Feistritz an der Gail,46.575542,13.605686,oral
+5,Ukve – Ugovizza,46.511772,13.47309,palatal 
+6,Podklošter – Arnoldstein,46.549767,13.709367,oral
+7,Rikarja vas – Riegersdorf,46.549639,13.77979,oral
+8,Rateče,46.497931,13.716195,palatal 
+9,Kranjska Gora,46.485388,13.787086,palatal 
+10,Marija na Zilji – Maria Gail ,46.599225,13.877878,no answer
+11,Loče – Latschach,46.557398,13.925692,oral
+12,Podravlje – Föderlach,46.599113,13.961416,oral
+13,Kostanje – Köstenberg,46.652624,14.010042,palatal
+14,Teholica – Techelsberg,46.652416,14.093663,no answer
+15,Breznica – Frießnitz,46.542917,14.053759,palatal
+16,Sveče – Suetschach,46.524254,14.158358,palatal
+17,Hodiše – Keutschach,46.594657,14.1899,palatal
+18,Čahorče – Tschachoritsch,46.554392,14.221798,palatal
+19,Slovenji Plajberk – Windisch Bleiberg,46.491533,14.239627,palatal
+20,Zabrda – Saberda,46.564185,14.34949,no answer
+21,Žrelec – Ebenthal,46.604734,14.360754,no answer
+22,Pokrče – Poggersdorf,46.650194,14.452979,no answer
+23,Radiše – Radsberg,46.586147,14.418389,no answer
+24,Sele – Zell Pfarre,46.471716,14.385748,nasal
+25,Kamen – Stein im Jauntal,46.610099,14.542156,no answer
+26,Tinje – Tainach,46.634379,14.53934,nasal
+27,Škocijan – St. Kanzian am Klopeiner See,46.613837,14.578681,oral
+28,Žitara vas – Sittersdorf,46.54556,14.60659,oral
+29,Obirsko – Ebriach,46.473211,14.509443,nasal
+30,Bela – Vellach,46.426588,14.548893,no answer
+31,Lepena – Leppen,46.480874,14.634405,no answer
+32,Djekše – Diex,46.746227,14.618228,palatal
+33,Kneža – Grafenbach,46.747269,14.664029,oral
+34,Grebinj – Griffen,46.704258,14.729682,no answer
+35,Podgora – Unternberg,46.659363,14.770412,no answer
+36,Rinkole – Rinkolach,46.622428,14.747063,nasal
+37,Globasnica – Globasnitz,46.555743,14.701723,oral
+38,Vidra vas – Wiederndorf,46.619843,14.805832,nasal
+39,Belšak – Weißenstein,46.59941,14.861508,oral
+40,Šentanel,46.572705,14.875534,oral
+41,Libeliče,46.619543,14.946852,oral
+42,Koprivna,46.454363,14.745558,alveolar 
+43,Črna na Koroškem,46.469749,14.848942,alveolar 
+44,Ravne na Koroškem,46.543715,14.964213,oral/nasal
+45,Dobrova pri Dravogradu,46.576998,15.014345,oral
+46,Pameče,46.535046,15.078996,nasal
+47,Brda,46.471823,15.144012,oral
+48,Straže (Mislinja),46.445305,15.189105,nasal
+49,Pernice,46.634328,15.125771,oral
+50,Sveti Primož na Pohorju,46.557987,15.16348,oral/nasal
+51,Vuzenica,46.596763,15.163533,nasal 
+52,Radlje ob Dravi,46.615188,15.226389,nasal
+53,Ribnica na Pohorju,46.535522,15.267448,nasal
+54,Lovrenc na Pohorju,46.538111,15.384344,nasal
+55,Zgornja Kapla,46.636612,15.375183,nasal
+56,Bila – San Giorgio di Resia,46.384993,13.288103,palatal
+57,Njiva – Gniva,46.364464,13.299142,no answer
+58,Osojani – Oseacco,46.358495,13.321418,no answer
+59,Solbica – Stolvizza,46.361739,13.359007,palatal
+60,Breg – Pers,46.276168,13.231804,no answer
+61,Bardo – Lusevera,46.275883,13.272038,palatal
+62,Viškorša – Monteaperta,46.273824,13.314921,palatal
+63,Černjeja – Cergneu,46.215404,13.319299,no answer
+64,Breginj,46.263321,13.423953,palatal
+65,Robidišče,46.215414,13.414565,palatal
+66,Log pod Mangartom,46.405916,13.603116,palatal
+67,Trenta,46.381471,13.753635,no answer
+68,Bovec,46.336798,13.550966,palatal
+69,Kred,46.250113,13.512783,palatal
+70,Kobarid,46.246443,13.577985,palatal
+71,Drežnica,46.256698,13.614428,palatal/palatalized
+72,Zatolmin ,46.194806,13.727797,alveolar
+73,Čiginj ,46.163068,13.709752,palatal
+74,Marsin – Mersino,46.190737,13.485882,no answer
+75,Matajur – Montemaggiore,46.194043,13.532434,palatal
+76,Livek,46.20298,13.59945,palatal
+77,Dreka – Drenchia,46.183631,13.636341,palatal
+78,Podbonesec – Pulfero,46.172731,13.48508,palatal
+79,Jeronišče – Jeronizza,46.158914,13.529482,palatal 
+80,Špeter [Špeter Slovenov] – San Pietro al Natisone,46.129558,13.486263,palatal
+81,Ošnije – Osgnetto,46.125551,13.523899,palatal
+82,Mirnik – Mernico ,46.046877,13.49369,no answer
+83,Brdice pri Kožbani,46.048145,13.53591,palatal
+84,Medana,45.985154,13.521436,no answer
+85,Kozana,45.993355,13.550522,palatal
+86,Kojsko,46.005813,13.575311,no answer
+87,Števerjan – San Floriano del Collio ,45.982321,13.581915,no answer
+88,Oslavje – Oslavia ,45.975489,13.611771,palatal
+89,Ročinj,46.118527,13.670163,palatal
+90,Avče,46.101183,13.683708,palatalized
+91,Kanal,46.085357,13.634689,palatal
+92,Kal nad Kanalom,46.083427,13.740959,alveolar
+93,Deskle,46.05343,13.61344,palatal
+94,Podlešče (Banjšice),46.054969,13.714465,alveolar
+95,Lokve,46.011633,13.791787,alveolar
+96,Grgar,46.002302,13.672431,palatalized
+97,Solkan,45.969504,13.64547,palatal
+98,Trnovo,45.973039,13.742362,alveolar
+99,Šempas,45.9286,13.743301,no answer
+100,Šempeter pri Gorici,45.928385,13.63796,palatalized
+101,Sovodnje – Savogna d’Isonzo,45.90302,13.572334,palatalized
+102,Miren,45.896161,13.607175,palatal
+103,Renče,45.8898,13.669956,palatalized
+104,Branik,45.855031,13.788225,palatal
+105,Doberdob – Doberdò del Lago,45.84323,13.540388,palatal
+106,Opatje selo,45.85132,13.582669,palatal
+107,Komen,45.81648,13.746981,palatal
+108,Šmarje,45.848309,13.851848,alveolar
+109,Štanjel,45.823305,13.843996,palatal
+110,Kopriva,45.78289,13.83377,palatal
+111,Mavhinje – Malchina,45.785294,13.658936,palatalized
+112,Križ – Santa Croce,45.73262,13.694889,palatal/palatalized
+113,Prosek – Prosecco,45.707879,13.735278,palatal
+114,Boljunec – Bagnoli della Rosandra,45.614686,13.8579,palatal
+115,Plavje,45.573075,13.801342,palatal
+116,Osp,45.571768,13.85832,palatal
+117,Prešnica,45.571371,13.938597,palatal
+118,Dekani,45.548259,13.811922,palatal
+119,Kubed,45.520859,13.869654,palatal
+120,Podgorje,45.527946,13.952471,palatal
+121,Korte,45.48951,13.654515,palatal
+122,Krkavče,45.463993,13.692781,palatal
+123,Pomjan,45.499244,13.755179,palatal
+124,Lopar,45.508442,13.825109,palatal
+125,Trebeše,45.471336,13.857469,palatal
+126,Sočerga,45.464669,13.893282,palatal
+127,Rakitovec,45.469709,13.970431,palatal
+128,Skrilje,45.892192,13.849141,alveolar
+129,Ajdovščina,45.887397,13.901423,alveolar
+130,Gaberje,45.839019,13.886025,alveolar
+131,Vipava,45.847565,13.962335,no answer
+132,Štjak,45.795028,13.905681,palatal
+133,Podnanos,45.79726,13.971758,palatal/palatalized
+134,Dutovlje,45.755882,13.832404,palatal
+135,Sežana,45.70341,13.870584,palatal
+136,Opčine – Opicina,45.687757,13.78837,palatal/palatalized
+137,Kolonkovec (Trst) – Coloncovez (Trieste),45.630691,13.8039,palatal
+138,Draga – Draga Sant’Elia,45.6204,13.889843,palatal
+139,Hrpelje,45.60313,13.947742,palatal
+140,Bukovje,45.821051,14.139652,palatal
+141,Planina,45.830392,14.252649,palatal
+142,Razdrto,45.756716,14.059784,nj
+143,Senožeče,45.718665,14.039483,palatal
+144,Matenja vas,45.739724,14.19121,palatal
+145,Slavina,45.712002,14.177544,palatal
+146,Klenik,45.678735,14.219879,alveolar
+147,Knežak,45.623833,14.244876,alveolar
+148,Dolnja Košana,45.66527,14.123646,palatal
+149,Barka,45.639942,14.05173,palatal
+150,Tatre,45.59784,14.08615,palatal
+151,Pregarje,45.578621,14.137332,palatal
+152,Hrušica,45.540345,14.12127,palatal
+153,Podgrad,45.524381,14.146161,palatal
+154,Sabonje,45.534768,14.182303,palatal
+155,Trnovo (Ilirska Bistrica),45.571922,14.232886,palatal
+156,Jelšane,45.500455,14.271348,no answer
+157,Podgraje,45.524837,14.345027,palatal
+158,Rut,46.205454,13.890834,palatal/nj
+159,Podbrdo,46.2146,13.974249,nj
+160,Porezen ,46.185072,13.9428,palatal
+161,Most na Soči,46.152295,13.744311,alveolar
+162,Grahovo ob Bači,46.15643,13.864499,alveolar
+163,Čepovan,46.049709,13.793285,palatal
+164,Gorenja Trebuša,46.029845,13.8388,alveolar
+165,Šebrelje,46.09311,13.91798,alveolar
+166,Cerkno,46.128287,13.991508,alveolar
+167,Srednja Kanomlja,46.032797,14.004094,no answer
+168,Laniše,46.077688,14.029405,alveolar
+169,Idrija,46.001325,14.022088,alveolar
+170,Črni Vrh,45.926606,14.044352,alveolar/palatal
+171,Godovič,45.957188,14.092786,no answer
+172,Hotedršica,45.930643,14.139252,nasal
+173,Logatec,45.91671,14.229708,nasal
+174,Vrhnika,45.962382,14.293716,alveolar
+175,Mala Ligojna,45.993452,14.305585,alveolar
+176,Horjul,46.022964,14.298113,oral/nasal
+177,Polhov Gradec,46.063983,14.312744,oral
+178,Dobračeva (Žiri),46.056927,14.109897,alveolar
+179,Lučine,46.061706,14.19642,alveolar
+180,Leskovica,46.147339,14.085272,jn
+181,Gorenja vas,46.106862,14.145057,alveolar
+182,Bukov Vrh,46.107465,14.216842,alveolar
+183,Javorje,46.159468,14.177909,alveolar
+184,Gabrk,46.136011,14.247241,alveolar
+185,Pungert,46.15654,14.336946,alveolar
+186,Žabnica,46.194309,14.333514,alveolar
+187,Zgornje Bitnje,46.213767,14.337426,alveolar
+188,Zgornja Sorica,46.223804,14.028912,palatal
+189,Zali Log,46.206578,14.101138,alveolar
+190,Podlonk,46.233129,14.12547,alveolar
+191,Železniki,46.221525,14.155856,alveolar
+192,Dražgoše,46.25249,14.176264,alveolar
+193,Selca,46.223981,14.203524,alveolar
+194,Praprotno,46.194129,14.260054,alveolar
+195,Dovje,46.467565,13.950244,alveolar
+196,Srednja vas v Bohinju,46.297473,13.925975,palatal
+197,Bohinjska Bela,46.339971,14.062715,alveolar
+198,Zgornje Gorje,46.380145,14.068399,alveolar
+199,Slovenski Javornik,46.427928,14.080469,alveolar
+200,Breg,46.39364,14.125385,alveolar
+201,Radovljica,46.342523,14.172058,alveolar
+202,Kropa,46.289887,14.20348,alveolar
+203,Ljubno,46.313625,14.247932,alveolar
+204,Lom pod Storžičem,46.366796,14.334934,alveolar
+205,Zgornje Jezersko,46.392994,14.497091,palatal
+206,Bašelj,46.315429,14.401517,alveolar
+207,Kokra,46.337093,14.511436,alveolar
+208,Stražišče (Kranj),46.231224,14.337865,alveolar
+209,Primskovo (Kranj),46.247615,14.372684,alveolar
+210,Šenčur,46.243494,14.418702,alveolar
+211,Cerklje na Gorenjskem,46.253535,14.486495,alveolar
+212,Valburga,46.168769,14.436517,alveolar
+213,Spodnja Senica,46.150533,14.38932,alveolar
+214,Dobrova,46.05331,14.414426,alveolar
+215,Zgornje Gameljne,46.127317,14.490253,alveolar
+216,Črna pri Kamniku,46.265723,14.625323,alveolar
+217,Tunjice,46.235964,14.579819,alveolar
+218,Srednje Jarše,46.155936,14.593438,alveolar
+219,Dolsko,46.091773,14.674863,alveolar
+220,Stebljevek,46.216024,14.744514,alveolar
+221,Okrog pri Motniku,46.227342,14.832098,alveolar
+222,Obrše,46.192708,14.701738,alveolar
+223,Krašnja,46.167352,14.746162,alveolar
+224,Moravče,46.136665,14.743843,alveolar
+225,Vače,46.119561,14.837986,alveolar
+226,Čemšenik,46.179853,14.943894,alveolar
+227,Izlake,46.155615,14.929107,oral
+228,Plešivica,45.989595,14.394959,oral
+229,Vnanje Gorice ,46.005799,14.413829,oral
+230,Borovnica,45.917985,14.364151,alveolar
+231,Rakitna,45.892194,14.439311,alveolar
+232,Rakek,45.814479,14.312311,alveolar
+233,Begunje pri Cerknici,45.81722,14.382797,alveolar
+234,Cerknica,45.796389,14.358071,alveolar
+235,Lipsenj,45.750361,14.425369,alveolar
+236,Nova vas,45.772558,14.506341,alveolar/nasal
+237,Stari trg pri Ložu,45.714167,14.469514,alveolar
+238,Vrhnika pri Ložu,45.704349,14.505527,alveolar
+239,Ig,45.960976,14.527771,alveolar
+240,Grosuplje,45.955134,14.656179,oral
+241,Velika Račna,45.904212,14.690002,oral
+242,Rašica,45.853265,14.623453,palatal/nj
+243,Podgorica,45.844046,14.701277,oral
+244,Sveti Gregor,45.784575,14.640761,alveolar
+245,Sodražica,45.761616,14.63628,alveolar
+246,Kolenča vas,45.786335,14.764604,no answer
+247,Ribnica,45.738841,14.730749,alveolar
+248,Dolenja vas,45.706768,14.753249,alveolar
+249,Rudnik (Ljubljana),46.025266,14.539238,alveolar
+250,Studenec (Ljubljana),46.055073,14.568716,alveolar
+251,Janče,46.05246,14.710889,oral
+252,Šmartno pri Litiji,46.044092,14.846616,no answer
+253,Gorenje Brezovo,45.98477,14.737053,oral
+254,Stična,45.956922,14.8053,oral
+255,Muljava,45.901844,14.79866,oral
+256,Zagradec,45.86042,14.833967,no answer
+257,Ambrus,45.827368,14.814886,oral
+258,Žužemberk,45.831726,14.93355,no answer
+259,Malo Lipje,45.804186,14.92329,oral
+260,Mačkovec pri Dvoru,45.816172,14.962522,no answer
+261,Tihaboj,45.991546,15.009397,oral
+262,Šentrupert,45.976933,15.089795,oral
+263,Mirna,45.94996,15.060534,alveolar
+264,Trebnje,45.910386,15.008607,oral
+265,Gorenji Vrh pri Dobrniču,45.878532,15.016589,oral
+266,Dobrnič,45.876282,14.978586,no answer
+267,Mokronog,45.942235,15.144487,oral/jn
+268,Brezovica pri Mirni,45.930533,15.041106,oral
+269,Vavta vas,45.780338,15.076741,oral
+270,Podhosta,45.761015,15.030177,oral
+271,Uršna sela,45.717308,15.124695,oral
+272,Koroška vas,45.745913,15.194931,no answer
+273,Novo mesto,45.798586,15.173891,alveolar
+274,Smolenja vas,45.816221,15.201935,oral
+275,Gabrje,45.778688,15.271947,no answer
+276,Zavinek,45.903329,15.299882,oral
+277,Sela pri Šentjerneju,45.827697,15.351742,oral
+278,Kostanjevica na Krki,45.845241,15.421172,no answer
+279,Babno Polje,45.644506,14.548002,no answer
+280,Draga,45.632818,14.654425,no answer
+281,Osilnica,45.52892,14.698203,no answer
+282,Delač,45.495253,14.895167,palatal
+283,Banja Loka,45.511113,14.873509,no answer
+284,Spodnja Bilpa,45.511582,14.966042,palatalized
+285,Predgrad,45.511482,15.055632,nj
+286,Stari trg ob Kolpi,45.494102,15.07711,no answer
+287,Dobliče,45.558824,15.144833,no answer
+288,Dragovanja vas,45.542436,15.152986,jn
+289,Dragatuš,45.521432,15.178914,no answer
+290,Vinica,45.461359,15.253528,no answer
+291,Preloka,45.470758,15.341305,palatal
+292,Adlešiči,45.522406,15.311025,no answer
+293,Vavpča vas,45.647232,15.177394,no answer
+294,Podzemelj,45.601149,15.27339,palatal
+295,Grm pri Podzemlju,45.617424,15.27847,alveolar
+296,Metlika,45.652015,15.315723,no answer
+297,Planinska vas,46.169244,15.03119,oral
+298,Dobovec,46.110839,15.058839,oral
+299,Svibno,46.063665,15.097306,oral
+300,Turje,46.130188,15.151001,oral
+301,Radeče,46.065716,15.183914,no answer
+302,Lokavec,46.09553,15.239174,oral
+303,Žigon,46.123279,15.28206,oral
+304,Sevnica,46.009222,15.304073,oral
+305,Ložice (Gorenji Leskovec),46.038043,15.409915,oral
+306,Leskovec pri Krškem,45.940245,15.477028,no answer
+307,Dobeno,45.868464,15.605085,no answer
+308,Velika Dolina,45.854234,15.664036,oral
+309,Solčava,46.420133,14.691791,no answer
+310,Luče,46.35647,14.743605,no answer
+311,Ljubno ob Savinji,46.341744,14.833246,palatal
+312,Gornji Grad,46.296129,14.805151,palatal
+313,Meliše,46.317717,14.864678,nj
+314,Spodnje Kraše,46.286627,14.905245,alveolar
+315,Nizka,46.315698,14.91857,nj
+316,Mozirje,46.338059,14.957183,alveolar
+317,Motnik,46.214812,14.887415,jn
+318,Šentgotard,46.187658,14.907614,alveolar
+319,Vransko,46.245628,14.95174,nasal
+320,Gomilsko,46.253366,15.042395,oral
+321,Šoštanj,46.379775,15.048217,oral
+322,Rečica ob Paki,46.322286,15.040892,oral
+323,Črnova,46.323492,15.184525,oral
+324,Ložnica pri Žalcu,46.260261,15.171598,oral
+325,Kasaze,46.222269,15.186127,oral
+326,Vojnik,46.293271,15.305132,nasal
+327,Svetina,46.185936,15.303627,nasal
+328,Proseniško,46.239433,15.34827,oral
+329,Šentjur,46.217593,15.39596,nasal
+330,Šentrupert,46.167269,15.34956,nasal
+331,Slivnica pri Celju,46.174112,15.427248,oral
+332,Žusem (Dobrina),46.151114,15.485844,nasal
+333,Zadrže,46.224804,15.506201,no answer
+334,Zibika,46.191469,15.554477,nasal
+335,Poljčane,46.31353,15.579084,nasal
+336,Spodnja Polskava,46.412822,15.636722,nasal
+337,Ratanska vas,46.247625,15.629939,nj
+338,Tlake,46.248505,15.717165,oral
+339,Dobovec pri Rogatcu,46.209281,15.758124,nasal
+340,Podčetrtek,46.157331,15.597377,no answer
+341,Planina pri Sevnici,46.104643,15.404848,oral
+342,Lopaca,46.128675,15.472705,oral
+343,Pilštanj,46.100102,15.525361,nasal
+344,Kozje,46.072912,15.557486,no answer
+345,Bistrica ob Sotli,46.057633,15.663375,oral
+346,Zgornja Sušica,46.016903,15.688715,nasal
+347,Pišece,46.003196,15.647874,nasal
+348,Sromlje,45.988785,15.592716,nasal
+349,Kapele,45.931305,15.678626,no answer
+350,Šentlenart (Brežice),45.922996,15.586985,oral
+351,Mostec,45.898929,15.628614,nasal
+352,Vitanje,46.380655,15.297041,nasal
+353,Skomarje,46.412833,15.340403,alveolar
+354,Žiče,46.315346,15.478796,nasal
+355,Kebelj,46.411172,15.455118,no answer
+356,Zafošt (Slovenska Bistrica),46.380252,15.550281,oral
+357,Lobnica,46.525799,15.526988,nasal
+358,Pivola,46.501246,15.615086,nasal
+359,Miklavž na Dravskem Polju,46.505754,15.699311,oral
+360,Lučane – Leutschach,46.667621,15.468253,oral
+361,Zgornji Slemen,46.608607,15.519047,oral
+362,Zgornja Kungota,46.638859,15.614036,oral
+363,Šentilj v Slovenskih goricah,46.676585,15.657207,nasal
+364,Zgornja Velka,46.676505,15.770532,nasal
+365,Kremberk,46.643738,15.843219,nasal
+366,Spodnja Voličina,46.544893,15.814366,nasal
+367,Negova,46.608954,15.937064,nasal
+368,Črešnjevci,46.656518,15.988518,nasal
+369,Brengova,46.563095,15.922967,nasal
+370,Sveti Jurij [Videm] ob Ščavnici,46.568473,16.020375,nasal
+371,Veržej,46.581764,16.162303,oral
+372,Križevci pri Ljutomeru,46.563114,16.139886,nasal
+373,Bučkovci,46.531306,16.056114,nasal
+374,Ljutomer,46.5194,16.195991,nasal
+375,Gibina,46.525452,16.312591,nasal
+376,Sveti Tomaž,46.483356,16.079735,nasal
+377,Miklavž pri Ormožu,46.459058,16.214651,nasal
+378,Juršinci,46.485322,15.971014,nasal
+379,Podvinci,46.433017,15.914974,nasal
+380,Cvetkovci,46.412159,16.063758,oral
+381,Ormož,46.408558,16.147583,oral/nasal
+382,Središče ob Dravi,46.393203,16.272092,nasal
+383,Ptujska Gora,46.353489,15.761031,no answer
+384,Žetale,46.275132,15.792705,no answer
+385,Podlehnik,46.336087,15.878865,oral
+386,Cirkulane,46.343599,15.99409,oral
+387,Cankova,46.719282,16.017857,no answer
+388,Gorica,46.702212,16.148177,palatalized
+389,Martjanci,46.684775,16.190556,no answer
+390,Strehovci,46.660416,16.319517,palatalized
+391,Beltinci,46.606018,16.232819,palatalized
+392,Gomilica,46.599698,16.313119,palatalized
+393,Nedelica,46.617868,16.338263,palatalized
+394,Velika Polana,46.571924,16.347111,palatalized
+395,Gornja Bistrica,46.55343,16.265012,oral
+396,Hotiza,46.5494,16.358928,nasal
+397,Večeslavci,46.785921,16.040725,palatalized
+398,Grad,46.80163,16.092648,palatal
+399,Gornji Petrovci,46.810536,16.217313,palatalized
+400,Križevci,46.793112,16.23552,no answer
+401,Kančevci,46.755959,16.239382,no answer
+402,Šalovci,46.823338,16.284708,palatal
+403,Markovci,46.844265,16.234859,no answer
+404,Gornji Senik – Felsőszölnök,46.876765,16.164103,palatal
+405,Slovenska vas – Rábatótfalu,46.945961,16.256248,no answer
+406,Ženavci – Jennersdorf,46.938179,16.14048,no data
+407,Banfi,46.507587,16.277368,no answer
+408,Hum na Sutli,46.211244,15.689851,no answer
+409,Dubravica,45.95365,15.731789,no answer
+410,Čabar,45.591018,14.638916,no answer
+411,Ravnice,45.568408,14.604469,no answer
+412,Ravna Gora,45.376504,14.942881,no answer
+413,Brest,45.455903,14.006866,no answer
+414,Žetinci – Sicheldorf,46.680985,16.024718,no data
+415,Radvanje – Rothwein,46.671221,15.119323,oral
+416,Vas,45.472359,14.859846,no data
+417,Novi Kot,45.626992,14.605854,no data
