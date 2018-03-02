@@ -211,10 +211,11 @@ class Heatmap:
         if self._mode == MODES[0]:
             self._legend = {value[0]: i + 1 if i + 1 <= len(COLOURS) else len(COLOURS)
                             for i, value in enumerate(count.most_common())}
-
             self._verboseprint(self._legend)
+
         elif self._mode == MODES[1]:
-            self._legend = {value_label: 0}
+            self._legend = {value_label: 1}
+            self._values = [float(v) for v in self._values]
 
     
     def calculate_grid(self) -> None:
@@ -304,10 +305,8 @@ class Heatmap:
                     elif self._mode == MODES[1]:
                         total_count = 0
                         for point_i, weighted_dist in vicinity:
-                            total_count += weighted_dist * float(self._values[point_i])
-                        if not total_count < 0:
-                            grid[i][j] = (1 if total_count >= 1
-                                          else total_count)
+                            total_count += weighted_dist * self._values[point_i]
+                        grid[i][j] = total_count
         
         self.grid = grid
     
@@ -327,17 +326,23 @@ class Heatmap:
                             urcrnrlat=self._lat_max, urcrnrlon=self._lon_max)
         
         m.drawcountries()
-        m.fillcontinents(color="white", lake_color="#ic9ef7", alpha=.1)
+        m.fillcontinents(color="white", lake_color="#1c9ef7", alpha=.1)
         m.drawcoastlines()
         m.drawrivers(color="#1c9ef7")
 
-        m.imshow(self.grid, alpha=1, vmin=0, vmax=len(COLOURS),
-                       cmap=get_unified_colourmap())
+        if self._mode == MODES[0]:
+            m.imshow(self.grid, alpha=1, vmin=0, vmax=len(COLOURS),
+                     cmap=get_unified_colourmap())
 
-        legend_items = []
-        for name, value in self._legend.items():
-            legend_items.append(Patch(color=COLOURS[value - 1], label=name))
-        plt.legend(handles=legend_items)
+            legend_items = []
+            for name, value in self._legend.items():
+                legend_items.append(Patch(color=COLOURS[value - 1], label=name))
+            plt.legend(handles=legend_items)
+
+        elif self._mode == MODES[1]:
+            img = m.imshow(self.grid, alpha=1, cmap="RdYlBu")
+            plt.colorbar(img)
+            plt.title(list(self._legend.keys())[0])
 
         plt.show()
         
