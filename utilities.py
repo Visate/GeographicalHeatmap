@@ -10,25 +10,40 @@ class Counter(dict):
     def __missing__(self, key: object) -> int:
         return 0
 
-def load_from_csv(filepath: str) -> tuple:
-    """ Loads the csv file and processes the data
+def verify_dataset(filepath: str) -> None:
     """
-    lats, lons, values, names = [], [], [], []
+    Verifies that the filepath provided is a valid
+    dataset that can be used by the Heatmap
+    """
+    assert filepath[-4:] == ".csv", "not a csv file"
+    open(filepath)
 
-    # make sure the file being opened is a csv file
-    assert filepath[-4:] == ".csv"
+def load_from_csv(filepath: str, name_col: int = 0,
+                  lat_col: int = 1, lon_col: int = 2, 
+                  value_col: int = 3) -> tuple:
+    """
+    Loads the csv file and processes the data
+    """
+    names, lats, lons, values = [], [], [], []
+
+    verify_dataset(filepath)
 
     with open(filepath) as file:
         reader = csv.reader(file)
-        next(reader)
+        value_label = next(reader)[value_col]
         for row in reader:
-            if not row[1] or not row[2] or not row[3] or row[3] == " ":
+            if (not row[name_col].strip()
+                or not row[lat_col].strip()
+                or not row[lon_col].strip()
+                or not row[value_col].strip()):
                 continue
-            lats.append(float(row[1]))
-            lons.append(float(row[2]))
-            values.append(row[3].strip())
-            names.append(row[0].strip())
+            if row[value_col] == "no answer" or row[value_col] == "no data":
+                continue
+            names.append(row[name_col].strip())
+            lats.append(float(row[lat_col]))
+            lons.append(float(row[lon_col]))
+            values.append(row[value_col].strip())
 
-        assert all([len(x) == len(lats) for x in [lons, values, names]])
+        assert all([len(x) == len(names) for x in [lats, lons, values]])
 
-        return lats, lons, values, names
+        return [names, lats, lons, values, value_label]

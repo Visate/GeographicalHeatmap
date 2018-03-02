@@ -1,266 +1,109 @@
 #!/usr/bin/env python
 """
-Geographical heatmap module
-written by Richard Gan
+entry point for heatmap program
 """
-from typing import List, Dict, Any, Callable, Union
-from collections import Counter as IterCounter
-from math import sqrt, ceil
-import numpy as np
-from colourmaps import get_unified_colourmap, COLOURS
-from utilities import Counter, load_from_csv
+import argparse
+from utilities import verify_dataset
+from heatmap import (Heatmap, DEFAULT_NAME_COL, 
+                     DEFAULT_LAT_COL, DEFAULT_LON_COL, DEFAULT_VALUE_COL,
+                     DEFAULT_SCALE, DEFAULT_RADIUS, DEFAULT_BORDER_SIZE, MODES)
 
-BORDER_WIDTH = 0.1 # how much space around the smallest & biggest points (deg)
-SCALE_DEFAULT = 0.007
-RADIUS_DEFAULT = 0.2
-FIGSIZE = (16, 10)
-
-class Heatmap:
-    """
-    Defines a heatmap
-
-    grid - grid of the heatmap
-    _verboseprint - function for debugging purposes
-    _filepath - current source dataset
-    _scale - scale of the map
-    _radius - search radius for grid generation (in degrees)
-    _values - values of points being plotted
-    _lats - latitudes of points being plotted
-    _lons - longitudes of points being plotted
-    _names - names of points being plotted
-    _legend - value to number mapping for the points
-    _lat_min - smallest lat subtracted by border_width
-    _lat_max - biggest lat added by border_width
-    _lon_min - smallest lon subtracted by border_width
-    _lon_max - biggest lon added by border_width
-    """
-    grid: np.ndarray
-    _verboseprint: Callable[..., Union[str, None]]
-    _filepath: str
-    _scale: float
-    _radius: float
-    _values: List[str]
-    _lats: List[float]
-    _lons: List[float]
-    _names: List[str]
-    _legend: Dict[str, int]
-    _lat_min: float
-    _lat_max: float
-    _lon_min: float
-    _lon_max: float
-
-    def __init__(self, filepath: str, scale: float = SCALE_DEFAULT, 
-                 radius: float = RADIUS_DEFAULT, verbose: bool = False) -> None:
-        """
-        Initializes a new heatmap
-        """
-        self._filepath, self._scale, self._radius = filepath, scale, radius
-        self._verboseprint = print if verbose else lambda *a, **k: None
-
-        self._initialize_data()
-
-    @property
-    def filepath(self) -> str:
-        """
-        Get current source filepath
-        """
-        return self._filepath
-    
-    @filepath.setter
-    def filepath(self, value: str) -> None:
-        self._filepath = value
-        self._initialize_data()
-
-    @property
-    def scale(self) -> float:
-        """
-        Get scale of the Heatmap
-        """
-        return self._scale
-    
-    @scale.setter
-    def scale(self, value: float) -> None:
-        self._scale = value
-
-    @property
-    def radius(self) -> float:
-        """
-        Get search radius for the Heatmap
-        """
-        return self._radius
-    
-    @radius.setter
-    def radius(self, value: float) -> None:
-        self._radius = value
-    
-    def _initialize_data(self) -> None:
-        """
-        Loads the dataset and prepares for it to be generated
-        """
-        self._lats, self._lons, self._values, self._names = load_from_csv(self._filepath)
-
-        self._lat_min = min(self._lats) - BORDER_WIDTH
-        self._lat_max = max(self._lats) + BORDER_WIDTH
-        self._lon_min = min(self._lons) - BORDER_WIDTH
-        self._lon_max = max(self._lons) + BORDER_WIDTH
-
-        # assigning a number to each unique value provided, and map it to the points
-        count = IterCounter(self._values)
-        # value[0] because value from a enumerate(IterCounter) gives a 
-        # tuple of the name of the item and how many of that item 
-        # are contained within the count.
-        self._legend = {value[0]: i + 1 if i + 1 <= len(COLOURS) else len(COLOURS)
-                        for i, value in enumerate(count.most_common())}
-
-        self._verboseprint(self._legend)
-    
-    def calculate_grid(self) -> None:
-        """
-        Calculates the values of the grid based on current information
-        """
-        self._verboseprint("Initializing map grid generation...")
-        # initial grid
-        grid_width = ceil((self._lon_max - self._lon_min) / self._scale)
-        grid_height = ceil((self._lat_max - self._lat_min) / self._scale)
-        self._verboseprint(("Map Parameters\n"
-                            "--------------\n"
-                            "Lat Min:         {}\n"
-                            "Lat Max:         {}\n"
-                            "Lat Grid Height: {}\n"
-                            "Lon Min:         {}\n"
-                            "Lon Max:         {}\n"
-                            "Lon Grid Width:  {}\n"
-                            "Grid Dimensions: ({}, {})\n").format(
-                            self._lat_min, self._lat_max, grid_height,
-                            self._lon_min, self._lon_max, grid_width,
-                            grid_width, grid_height))
-
-        grid = np.full((grid_height, grid_width), 0.0)
-
-        self._verboseprint("Determining grid coordinates of points...")
-        x_coords, y_coords = [], []
-        item_count = len(self._lats)
-        for i in range(item_count):
-            lat, lon = self._lats[i], self._lons[i]
-            value, name = self._values[i], self._names[i]
-            grid_x = ceil((lon - self._lon_min) / scale)
-            grid_y = ceil((lat - self._lat_min) / scale)
-            x_coords.append(grid_x)
-            y_coords.append(grid_y)
-            # y comes first in the way the grid displays the map
-            # which is why it is reversed in this fashion.
-            # debugging is shown in x y to keep in line with
-            # conventional thinking, since if you think of them
-            # in the x y convention then it still makes sense 
-            # on the actual map.
-            grid[grid_y][grid_x] = self._legend[value]
-            self._verboseprint(("{} -> Map Coords: ({}, {}) || "
-                                "Grid Coords: ({}, {}) || "
-                                "Value: {} ({})").format(
-                                name, lat, lon, grid_x, grid_y, 
-                                value, self._legend[value]))
-
-        self._verboseprint("Filling in the grid...")
-        try:
-            import progressbar # displays progress nicely if installed
-            prog_bar = progressbar.ProgressBar()
-        except ImportError:
-            prog_bar = lambda l: l
-        for i in prog_bar(range(grid_height)):
-            for j in range(grid_width):
-                radius = self._radius / scale
-                vicinity = [[point_i, 
-                            sqrt((x_coords[point_i] - j) ** 2 +
-                            (y_coords[point_i] - i) ** 2)] 
-                            for point_i in range(item_count)]
-                if [item for item in vicinity if item[1] <= radius]:
-                    vicinity = [[point_i, 0.99 - point_dist / radius]
-                                for point_i, point_dist in vicinity
-                                if point_dist <= radius]
-                    weights = Counter()
-                    for point_i, weighted_dist in vicinity:
-                        weights[self._values[point_i]] += weighted_dist
-                    weights = list(weights.items())
-                    weights.sort(key=lambda item: item[1], reverse=True)
-                    dominant = weights[0]
-                    d_value = dominant[0]
-                    d_weight = dominant[1]
-                    # sum of the other weights
-                    rest = sum([weight for value, weight in weights[1:]])
-                    if not d_weight < rest:
-                        total_weight = d_weight - rest
-                        grid[i][j] = (self._legend[d_value]
-                                      if total_weight >= 0.99
-                                      else self._legend[d_value] - (0.99 - total_weight))
-        
-        self.grid = grid
-    
-    def display_map(self) -> None:
-        """
-        Uses matplotlib to display the map
-        Requires matplotlib and basemap to be installed basemap.in order to function
-        """
-        from mpl_toolkits.basemap import Basemap
-        from matplotlib.patches import Patch
-        import matplotlib.pyplot as plt
-
-        plt.figure(figsize=FIGSIZE)
-
-        m = Basemap(projection="merc", resolution="i",
-                            llcrnrlat=self._lat_min, llcrnrlon=self._lon_min,
-                            urcrnrlat=self._lat_max, urcrnrlon=self._lon_max)
-        
-        m.drawcountries()
-        m.fillcontinents(color="white", lake_color="#ic9ef7", alpha=.1)
-        m.drawcoastlines()
-        m.drawrivers(color="#1c9ef7")
-
-        m.imshow(self.grid, alpha=1, vmin=0, vmax=len(COLOURS),
-                       cmap=get_unified_colourmap())
-
-        legend_items = []
-        for i, name in enumerate(self._legend):
-            legend_items.append(Patch(color=COLOURS[i], label=name))
-        plt.legend(handles=legend_items)
-
-        plt.show()
-        
-if __name__ == "__main__":
-    import argparse
+def main():
     parser = argparse.ArgumentParser(description=("Generates a heatmap from "
                                                   "data and displays it"))
     parser.add_argument("-v", "--verbose", action="store_true")
     parser.add_argument("-d", "--dataset")
+    parser.add_argument("-m", "--mode")
+    parser.add_argument("-nc", "--name_col")
+    parser.add_argument("-latc", "--lat_col")
+    parser.add_argument("-lonc", "--lon_col")
+    parser.add_argument("-vc", "--value_col")
     parser.add_argument("-s", "--scale")
     parser.add_argument("-r", "--radius")
+    parser.add_argument("-bsize", "--bordersize")
     args = parser.parse_args()
 
     dataset = args.dataset
+    mode = args.mode.lower() if args.mode else None
+    name_col = int(args.name_col) if args.name_col else None
+    lat_col = int(args.lat_col) if args.lat_col else None
+    lon_col = int(args.lon_col) if args.lon_col else None
+    value_col = int(args.value_col) if args.value_col else None
+    scale = float(args.scale) if args.scale else None
+    radius = float(args.radius) if args.radius else None
+    border_size = float(args.bordersize) if args.bordersize else None
+
     while not dataset:
         try:
             dataset = input("Which dataset csv file to use? (enter filepath): ")
-            if dataset[-4:] != ".csv":
-                raise ValueError("csv file not provided")
-            open(dataset)
-        except ValueError:
-            print("Please provide a csv file.")
-            dataset = None
+            verify_dataset(dataset)
         except Exception as err:
-            print("Error: {}. Please provide a valid dataset.".format(err))
+            dataset = None
+            print("Error: {}. Please try again.".format(err))
 
-    scale = float(args.scale) if args.scale else None
+    while not mode:
+        try:
+            mode = input(("What mode is the map in? Leave blank for default. "
+                         "Type 'list' to get a list of the modes: ")).lower()
+            if mode == "list":
+                mode = None
+                print("Available modes: {}\n".format(", ".join(MODES)))
+                print("Please refer to the documentation for more details.")
+            if not mode:
+                mode = MODES[0]
+            elif mode not in MODES:
+                raise ValueError("invalid mode")
+        except Exception as err:
+            mode = None
+            print("Error: {}. Please try again.".format(err))
+
+    while not name_col:
+        try:
+            name_col = input(("What column are the point names in? "
+                             "Leave blank for column {}: ".format(DEFAULT_NAME_COL + 1)))
+            name_col = DEFAULT_NAME_COL + 1 if not name_col else int(name_col)
+        except Exception as err:
+            name_col = None
+            print("Error: {}. Please try again.".format(err))
+
+    while not lat_col:
+        try:
+            lat_col = input(("What column are the latitudes in? "
+                             "Leave blank for column {}: ".format(DEFAULT_LAT_COL + 1)))
+            lat_col = DEFAULT_LAT_COL + 1 if not lat_col else int(lat_col)
+        except Exception as err:
+            lat_col = None
+            print("Error: {}. Please try again.".format(err))
+
+    while not lon_col:
+        try:
+            lon_col = input(("What column are the longitudes in? "
+                             "Leave blank for column {}: ".format(DEFAULT_LON_COL + 1)))
+            lon_col = DEFAULT_LON_COL + 1 if not lon_col else int(lon_col)
+        except Exception as err:
+            lon_col = None
+            print("Error: {}. Please try again.".format(err))
+
+    while not value_col:
+        try:
+            value_col = input(("What column are the values in? "
+                             "Leave blank for column {}: ".format(DEFAULT_VALUE_COL + 1)))
+            value_col = DEFAULT_VALUE_COL + 1 if not value_col else int(value_col)
+        except Exception as err:
+            value_col = None
+            print("Error: {}. Please try again.".format(err))
+
     while not scale:
         try:
             scale = input(("What is the scale of the map? "
             "Leave blank for the default value of 0.007 "
             "(smaller = more fidelity but slower, "
             "larger = less accurate but faster): "))
-            scale = SCALE_DEFAULT if not scale else float(scale)
+            scale = DEFAULT_SCALE if not scale else float(scale)
         except Exception:
-            print("Please input a valid number.")
             scale = None
+            print("Please input a valid number.")
     
-    radius = float(args.radius) if args.radius else None
     while not radius:
         try:
             radius = input(("What is the checking radius for the data? "
@@ -268,11 +111,24 @@ if __name__ == "__main__":
             "(This is based on latitude/longitude degrees "
             "and determines how far the program will look "
             "for another point in the area): "))
-            radius = RADIUS_DEFAULT if not radius else float(radius)
+            radius = DEFAULT_RADIUS if not radius else float(radius)
         except Exception:
-            print("Please input a valid number.")
             radius = None
+            print("Please input a valid number.")
 
-    heatmap = Heatmap(dataset, scale, radius, args.verbose)
+    while not border_size:
+        try:
+            border_size = input(("What is the border size of the map? "
+                                 "Leave blank for default of 0.03"))
+            border_size = DEFAULT_BORDER_SIZE if not border_size else float(border_size)
+        except Exception:
+            border_size = None
+            print("Please input a valid number.")
+
+    heatmap = Heatmap(dataset, mode, name_col - 1, lat_col - 1, lon_col - 1,
+                      value_col - 1, scale, radius, border_size, args.verbose)
     heatmap.calculate_grid()
     heatmap.display_map()
+
+if __name__ == "__main__":
+    main()
