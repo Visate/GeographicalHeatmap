@@ -105,5 +105,5 @@ def get_unified_colourmap() -> LinearSegmentedColormap:
     """Returns an adjusted version of the unified colourmap
     according to the number provided
     """
-    unified_cmap = LinearSegmentedColormap('unified_cmap', _unified_map, N=50000)
+    unified_cmap = LinearSegmentedColormap('unified_cmap', _unified_map, N=100000)
     return unified_cmap
