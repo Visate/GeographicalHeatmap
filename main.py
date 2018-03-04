@@ -208,7 +208,7 @@ def main():
     west_offset = 0 if west_offset == None else west_offset
 
     heatmap = Heatmap(dataset, mode, name_col - 1, lat_col - 1, lon_col - 1,
-                      value_col - 1, scale, radius, west_offset, 
+                      value_col - 1, scale, radius, border_offset, 
                       north_offset, south_offset, east_offset, west_offset,
                       args.verbose)
     
