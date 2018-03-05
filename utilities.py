@@ -39,10 +39,15 @@ def load_from_csv(filepath: str, name_col: int = 0,
                 continue
             if row[value_col] == "no answer" or row[value_col] == "no data":
                 continue
-            names.append(row[name_col].strip())
-            lats.append(float(row[lat_col]))
-            lons.append(float(row[lon_col]))
-            values.append(row[value_col].strip())
+            name = row[name_col].strip()
+            lat = float(row[lat_col])
+            lon = float(row[lon_col])
+            value_split = row[value_col].strip().split("/")
+            for value in value_split:
+                names.append(name)
+                lats.append(lat)
+                lons.append(lon)
+                values.append(value)
 
         assert all([len(x) == len(names) for x in [lats, lons, values]])
 

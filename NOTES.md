@@ -64,7 +64,53 @@ b) original but...
 You are getting negative numbers in your map
 Rethink the adjustment on the distance because that only works for singular points and does not extend to multiple weights.
 
-## TODO
+## TODO FEB 27
 Visible legend (play around with the colorbar axis)
 Better UI/UX
 Documentation
+
+## TODO MAR 2
+Implement the things that make it easier to be imported and used LATER, focus on getting presentation and being able to just run as a console program FIRST
+All:
+NSEW Border Control (y)
+Remember to trunc any points that aren't within the area given (y)
+
+Mode weighted changes:
+Customizable Colourmap (y)
+Title font bigger (y)
+
+Mode influence changes:
+Legend location change (y)
+Bigger legend (y)
+Fix the colourmap (y)   
+
+For my presentation: no more than 10 mins, allow at least 2 minutes for questions, max 15 minutes
+Sl1: TITLE (Name, Mapping Slovenian)
+Sl2: Highlights (30 second important parts of the presentation)
+Sl3: Intro and background (Challenge of linguistic data to map, how to present the data)
+ - talk about people having different approaches
+ - slovenian has lots of variation
+ - refer to the linguistic maps (this is how the data is presented normally) (Slovenian linguistic atlas)
+ - they make lexcial maps, phonological maps, morphological maps, phonetic maps
+ - mostly interested in phonetic and phonological
+ - talk about the tocke map (~400 points, each has 1200 values, this group has 2 volumes, 7 planned, progress is very slow)
+ - ustnica [ustnitsa] (lots of points, lots of details, missing big picture)
+ - pop soda heatmap <- this is the goal, don't have right now for slovenian
+ - can see where the points are common
+ - don't want to have to generate the whole map, but can just focus on a small portion of the map
+Sl4: Demonstrations
+ - show pregenerated examples 
+ - example of a big map with lots of values (svinja map is similar to the big map generated)
+ - demonstrate the changes in parameters
+ - acoustic parameter of nasalance, higher the nasalance the more nasal a sound is, and vice versa (have heard about this in previous presentation)
+ - two maps: java: how nasal the word with the j is yava or nava, but not looking at nava, alija [alija] or [alina]: comparing how nasal j is as opposed to n, so ali-a
+ - for live demo:
+    - on alija map column 6, change colourmap, change radius, change map boundaries
+Sl5: technical details
+ - python, matplotlib, basemap, numpy
+ - WIP: clickable UI, documentation, easy-install
+Maps to generate:
+mapfinalfix.csv (increase top and right dimensions, move legend to bottom right increase legend size)
+horizontalize dimension on and adjust colourmap:
+alija.csv 6th column
+java.csv 4th column
